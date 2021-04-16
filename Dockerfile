@@ -3,14 +3,6 @@ FROM php:7.3.27-apache
 RUN apt-get clean
 RUN apt-get update
 
-# INSTALL PHP EXTENSIONS
-RUN docker-php-ext-install pdo_mysql
-
-# ANABLE APACHE MOD REWRITE
-RUN a2enmod rewrite
-# ANABLE APACHE MOD HEADER
-RUN a2enmod headers
-
 #install some basic tools
 RUN apt-get install -y \
         git \
@@ -23,7 +15,19 @@ RUN apt-get install -y \
         unzip \
         libnss3 \
         libpng-dev \
-        libzip-dev
+        libzip-dev \
+        && rm -rf /var/lib/apt/lists/*
+
+# INSTALL PHP EXTENSIONS
+RUN docker-php-ext-install pdo_mysql
+
+# INSTALL PHP ZIP
+RUN docker-php-ext-install zip
+
+# ANABLE APACHE MOD REWRITE
+RUN a2enmod rewrite
+# ANABLE APACHE MOD HEADER
+RUN a2enmod headers
 
 #setup composer
 RUN curl -sS https://getcomposer.org/installer | php \
