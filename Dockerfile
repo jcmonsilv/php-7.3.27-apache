@@ -16,10 +16,11 @@ RUN apt-get install -y \
         libnss3 \
         libpng-dev \
         libzip-dev \
-        && rm -rf /var/lib/apt/lists/*
+        && rm -rf /var/lib/apt/lists/*  
 
 # INSTALL PHP EXTENSIONS
 RUN docker-php-ext-install pdo_mysql
+RUN docker-php-ext-install mysqli && docker-php-ext-enable mysqli
 
 # INSTALL PHP ZIP
 RUN docker-php-ext-install zip
